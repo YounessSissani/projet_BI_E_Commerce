@@ -1,0 +1,48 @@
+<Schema name="CommandArticle">
+  <Cube name="OLAP" visible="true" cache="true" enabled="true">
+    <Table name="fact_table">
+    </Table>
+    <Dimension type="TimeDimension" visible="true" foreignKey="DateId" highCardinality="false" name="Date">
+      <Hierarchy name="Temps" visible="true" hasAll="true" primaryKey="id">
+        <Table name="date_dim">
+        </Table>
+        <Level name="Annee" visible="true" table="date_dim" column="annee" nameColumn="annee" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+        </Level>
+        <Level name="Mois" visible="true" table="date_dim" column="mois" nameColumn="mois" type="Integer" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+        </Level>
+        <Level name="Jours" visible="true" table="date_dim" column="jour" nameColumn="jour" type="String" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+        </Level>
+        <Level name="Trimestre" visible="true" table="date_dim" column="Trimestre" nameColumn="Trimestre" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="client_id" highCardinality="false" name="client">
+      <Hierarchy name="client" visible="true" hasAll="true" primaryKey="client_id">
+        <Table name="client_dim">
+        </Table>
+        <Level name="Nom_Complet" visible="true" table="client_dim" column="Nom_Complet" nameColumn="Nom_Complet" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Ville" visible="true" table="client_dim" column="City" nameColumn="City" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Adresse" visible="true" table="client_dim" column="Adresse" nameColumn="Adresse" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="produit_id" highCardinality="false" name="Produit">
+      <Hierarchy name="Produit" visible="true" hasAll="true" primaryKey="produit_id">
+        <Table name="produit_dim">
+        </Table>
+        <Level name="Nom_Produit" visible="true" table="produit_dim" column="ProductName" nameColumn="ProductName" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Prix_Unitaire" visible="true" table="produit_dim" column="UnitPrice" nameColumn="UnitPrice" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="somme_Commande" column="Quantity" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Sum_Montant_Produit" column="Montant" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="AVG_commande" column="Quantity" datatype="Integer" aggregator="avg" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
